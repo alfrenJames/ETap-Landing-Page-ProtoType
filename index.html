@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--========== BOX ICONS ==========-->
+        <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css">
+
+        <!--========== CSS ==========-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>ETaP</title>
+    </head>
+    <body>
+
+        <!--========== SCROLL TOP ==========-->
+        <a href="#" class="scrolltop" id="scroll-top">
+            <i class='bx bx-chevron-up scrolltop__icon'></i>
+        </a>
+
+        <!--========== HEADER ==========-->
+        <header class="l-header" id="header">
+            <nav class="nav bd-container">
+                <a href="#" class="nav__logo">ETap</a>
+
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
+                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="#menu" class="nav__link">How To</a></li>
+                        <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
+
+                        <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
+                    </ul>
+                </div>
+
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+        </header>
+
+        <main class="l-main">
+            <!--========== HOME ==========-->
+            <section class="home" id="home">
+                <div class="home__container bd-container bd-grid">
+                    <div class="home__data">
+                        <h1 class="home__title">ETap</h1>
+                        <h2 class="home__subtitle">Rent and Enjoy <br> Lorem, ipsum dolor..</h2>
+                        <a href="#" class="button" id="start-modal-button">Start ETap Experience</a>
+                        <!-- Modal Structure -->
+                        <div id="myModal" class="modal" style="display: none;">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2>Welcome to ETap!</h2>
+                                <p>Enjoy your experience.</p>
+                                <a class="icon1">
+                                    <i class="fas fa-4x fa-bicycle"></i>
+                                </a>
+                                <div class="progress">
+                                    <div class="toggle-btn" id="unact">
+                                        <div class="inner-circle"></div>
+                                    </div>
+                                    <div class="toggle-btn active" id="act" type="button" style="pointer-events: none;">
+                                        <div class="inner-circle" type="button"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Countdown Message Display -->
+                                <div id="countdown-message" style="color: black; text-align: center; margin-top: 20px;">
+                                Start Renting will appear
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add this script before the closing </body> tag -->
+                        <script>
+                            // Get modal element
+                            var modal = document.getElementById("myModal");
+                            var btn = document.getElementById("start-modal-button");
+                            var span = document.getElementsByClassName("close")[0];
+                        
+                            // When the user clicks the button, open the modal 
+                            btn.onclick = function() {
+                                modal.style.display = "block";
+                            }
+                        
+                            // When the user clicks on <span> (x), close the modal
+                            span.onclick = function() {
+                                modal.style.display = "none";
+                            }
+                        
+                            // When the user clicks anywhere outside of the modal, close it
+                            window.onclick = function(event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
+                        </script>
+                    </div>
+    
+                    <img src="assets/img/ETap.jpeg" alt="" class="home__img" style="border-radius: 100%; width: 50vw;">
+                </div>
+            </section>
+            <script src="script.js"></script>
+            <!--========== ABOUT ==========-->
+            <section class="about section bd-container" id="about">
+                <div class="about__container  bd-grid">
+                    <div class="about__data">
+                        <span class="section-subtitle about__initial">About us</span>
+                        <h2 class="section-title about__initial">Lorem ipsum dolor sit. <br> Lorem, ipsum.</h2>
+                        <p class="about__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nam molestias ipsum esse?</p>
+                        <a href="#" class="button">Lear More</a>
+                    </div>
+
+                    <img src="assets/img/about_us.jpeg" alt="" class="about__img">
+                </div>
+            </section>
+
+            <!--========== SERVICES ==========-->
+            <section class="services section bd-container" id="services">
+                <span class="section-subtitle">Offering</span>
+                <h2 class="section-title">Our amazing services</h2>
+
+                <div class="services__container  bd-grid">
+                    <div class="services__content">
+                       
+                        <h3 class="services__title">Real Time Ebike Rent Monitoring</h3>
+                        <p class="services__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo, atque!</p>
+                    </div>
+
+                    <div class="services__content">
+                        
+                        <h3 class="services__title">Easy Apporval</h3>
+                        <p class="services__description">We offer our clients excellent quality services.</p>
+                    </div>
+
+                    <div class="services__content">
+                       
+                        <h3 class="services__title">Acount Management</h3>
+                        <p class="services__description">We offer our clients excellent quality services</p>
+                    </div>
+                </div>
+            </section>
+
+            <!--========== MENU ==========-->
+            <section class="menu section bd-container" id="menu">
+                <span class="section-subtitle">How TO</span>
+                <h2 class="section-title">Let's Get Started</h2>
+
+                <div class="menu__container bd-grid">
+                    <div class="menu__content">
+                        <img src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7865.jpg?t=st=1727578453~exp=1727582053~hmac=0b7d6994b737368e4eb6f0bb3881e1189a230940745ab07b2884d71e360421aa&w=740" alt="" class="menu__img">
+                        <h3 class="menu__name">Create Account</h3>
+                        <i class='bx bx-arrow-from-left'></i>
+                    </div>
+
+                    <div class="menu__content">
+                        <img src="https://img.freepik.com/free-vector/flat-design-installment-illustration_23-2149409058.jpg?t=st=1727578651~exp=1727582251~hmac=c73c7d954986a86f7d32b8c6ae9c4b6bfe7f77f023aa9166292cc3263166ac7d&w=740" alt="" class="menu__img">
+                        <h3 class="menu__name">Scan Gcash Payment to Add Time Credit</h3>
+                        <i class='bx bx-arrow-from-left'></i>
+                    </div>
+                    
+                    <div class="menu__content">
+                        <img src="https://img.freepik.com/free-vector/hands-holding-tablet-with-forefinger-clicking-start-button-new-application-launch-flat-illustration_74855-20595.jpg?t=st=1727579065~exp=1727582665~hmac=535611219af21274b044787723531b344f2d12d0a5efaa048a86f2f4662de351&w=740" alt="" class="menu__img">
+                        <h3 class="menu__name">Start ETaP</h3>
+                        <i class='bx bx-arrow-from-left'></i>
+                    </div>
+
+                    <div class="menu__content">
+                        <img src="https://img.freepik.com/free-vector/colorful-bike-parking-concept_1284-38068.jpg?t=st=1727579288~exp=1727582888~hmac=f7050ea20e30d205bc4c85dde0e2ef988e0a707f3d97f5d6d37145f5f99fb5cc&w=740" alt="" class="menu__img">
+                        <h3 class="menu__name">Park in Designated Area</h3>
+                        <i class='bx bxs-flag-checkered'></i>
+                    </div>
+                </div>
+            </section>
+
+            <!--========== CONTACT US ==========-->
+            <section class="contact section bd-container" id="contact">
+                <div class="contact__container bd-grid">
+                    <div class="contact__data">
+                        <span class="section-subtitle contact__initial">Let's talk</span>
+                        <h2 class="section-title contact__initial">Contact us</h2>
+                        <p class="contact__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore quam vel optio in magnam consequuntur neque amet reprehenderit commodi placeat.</p>
+                    </div>
+
+                    <div class="contact__button">
+                        <a href="#" class="button">Contact us now</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!--========== FOOTER ==========-->
+        <footer class="footer section bd-container">
+            <div class="footer__container bd-grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">ETap</a>
+                    <span class="footer__description">Ebike Rental System</span>
+                    <div>
+                        <a href="#" class="footer__social"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" class="footer__social"><i class='bx bxl-twitter'></i></a>
+                    </div>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Information</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">EBike Rental</a></li>
+                        <li><a href="#" class="footer__link">Pricing</a></li>
+                        <li><a href="#" class="footer__link">How To</a></li>
+                        <li><a href="#" class="footer__link">About Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Know More</h3>
+                    <ul>
+                        <li><a href="#" class="footer__link">Event</a></li>
+                        <li><a href="#" class="footer__link">Contact us</a></li>
+                        <li><a href="#" class="footer__link">Privacy policy</a></li>
+                        <li><a href="#" class="footer__link">Terms of services</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">Address</h3>
+                    <ul>
+                        <li>WCC AeroTech Bldg</li>
+                        <li>Brgy Linmansangan</li>
+                        <li>Binalonan - 2436</li>
+                        <li>Pangasinan</li>
+                        <li>etaprental@gmail.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="footer__copy">&#169; 2024 ETap. All right reserved</p>
+        </footer>
+
+        <!--========== SCROLL REVEAL ==========-->
+        <script src="https://unpkg.com/scrollreveal"></script>
+
+        <!--========== MAIN JS ==========-->
+        <script src="assets/js/main.js"></script>
+    </body>
+</html>
