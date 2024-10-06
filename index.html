@@ -33,7 +33,7 @@
                     <ul class="nav__list">
                         <li class="nav__item"><a href="#home" class="nav__link active-link">Home</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="#services" class="nav__link">Pricing</a></li>
                         <li class="nav__item"><a href="#menu" class="nav__link">How To</a></li>
                         <li class="nav__item"><a href="#contact" class="nav__link">Contact us</a></li>
 
@@ -53,74 +53,26 @@
                 <div class="home__container bd-container bd-grid">
                     <div class="home__data">
                         <h1 class="home__title">ETap</h1>
-                        <h2 class="home__subtitle">Rent and Enjoy <br> Lorem, ipsum dolor..</h2>
+                        <h2 class="home__subtitle">"Har-E ng kalsada"</h2>
                         <a href="#" class="button" id="start-modal-button">Start ETap Experience</a>
-                        <!-- Modal Structure -->
-                        <div id="myModal" class="modal" style="display: none;">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <h2>Welcome to ETap!</h2>
-                                <p>Enjoy your experience.</p>
-                                <a class="icon1">
-                                    <i class="fas fa-4x fa-bicycle"></i>
-                                </a>
-                                <div class="progress">
-                                    <div class="toggle-btn" id="unact">
-                                        <div class="inner-circle"></div>
-                                    </div>
-                                    <div class="toggle-btn active" id="act" type="button" style="pointer-events: none;">
-                                        <div class="inner-circle" type="button"></div>
-                                    </div>
-                                </div>
-
-                                <!-- Countdown Message Display -->
-                                <div id="countdown-message" style="color: black; text-align: center; margin-top: 20px;">
-                                Slide to Start Renting
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Add this script before the closing </body> tag -->
-                        <script>
-                            // Get modal element
-                            var modal = document.getElementById("myModal");
-                            var btn = document.getElementById("start-modal-button");
-                            var span = document.getElementsByClassName("close")[0];
-                        
-                            // When the user clicks the button, open the modal 
-                            btn.onclick = function() {
-                                modal.style.display = "block";
-                            }
-                        
-                            // When the user clicks on <span> (x), close the modal
-                            span.onclick = function() {
-                                modal.style.display = "none";
-                            }
-                        
-                            // When the user clicks anywhere outside of the modal, close it
-                            window.onclick = function(event) {
-                                if (event.target == modal) {
-                                    modal.style.display = "none";
-                                }
-                            }
-                        </script>
                     </div>
     
                     <img src="assets/img/ETap.png" alt="" class="home__img" style="border-radius: 100%; width: 50vw;">
                 </div>
             </section>
-            <script src="script.js"></script>
             <!--========== ABOUT ==========-->
             <section class="about section bd-container" id="about">
                 <div class="about__container  bd-grid">
                     <div class="about__data">
                         <span class="section-subtitle about__initial">About us</span>
-                        <h2 class="section-title about__initial">Lorem ipsum dolor sit. <br> Lorem, ipsum.</h2>
-                        <p class="about__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam nam molestias ipsum esse?</p>
+                        <h2 class="section-title about__initial">We-Tap is a group of dedicated students</h2>
+                        <p class="about__description">
+                            working together to make a positive impact. Our goal is to use our combined skills and experience to create an improved innovation of e-bike to provide transportation inside the school campus with the goal of reducing carbon footprints by utilizing practical solutions for improved processes, and to achieve great results. We believe in teamwork, innovation, and always striving to do better.
+                        </p>
                         <a href="#" class="button">Lear More</a>
                     </div>
 
-                    <img src="assets/img/about_us.jpeg" alt="" class="about__img">
+                    <img src="assets/img/Our_Team.jpg" alt="" class="about__img">
                 </div>
             </section>
 
@@ -132,21 +84,18 @@
                 <div class="services__container  bd-grid">
                     <div class="services__content">
                        
-                        <h3 class="services__title">Real Time Ebike Rent Monitoring</h3>
-                        <p class="services__description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nemo, atque!</p>
-                    </div>
-
-                    <div class="services__content">
-                        
-                        <h3 class="services__title">Easy Apporval</h3>
-                        <p class="services__description">We offer our clients excellent quality services.</p>
-                    </div>
-
-                    <div class="services__content">
+                        <h3 class="services__title">✅Real Time Ebike Rent Monitoring</h3>
+                        <h3 class="services__title">✅Easy Apporval</h3>
+                        <h3 class="services__title">✅Acount Management</h3>
                        
-                        <h3 class="services__title">Acount Management</h3>
-                        <p class="services__description">We offer our clients excellent quality services</p>
                     </div>
+                    <div class="services__content">
+                        <h3 class="services__title">🛵PHP 100 = 20 Rides</h3>
+                        <h3 class="services__title">🛵PHP 80 = 15 Rides</h3>
+                        <h3 class="services__title">🛵PHP 60 = 10 Rides</h3>
+                        <h3 class="services__title">🛵PHP 40 = 10 Rides</h3>
+                    </div>
+
                 </div>
             </section>
 
@@ -251,5 +200,65 @@
 
         <!--========== MAIN JS ==========-->
         <script src="assets/js/main.js"></script>
+        <!-- Modal Structure -->
+        <div id="login-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-modal">&times;</span>
+                <h2>Login</h2>
+                <form id="login-form" onsubmit="return validateLogin(event)">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <button type="submit" class="button">Login</button>
+                    <div id="error-message" style="color: red; display: none;">Invalid username or password</div> <!-- New error message label -->
+                </form>
+            </div>
+        </div>
+        <script>
+            // Get modal element
+            const modal = document.getElementById("login-modal");
+            const startButton = document.getElementById("start-modal-button");
+            const closeButton = document.getElementById("close-modal");
+        
+            // Show modal on button click
+            startButton.onclick = function() {
+                modal.style.display = "block";
+            }
+        
+            // Close modal when close button is clicked
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+            }
+        
+            // Close modal when clicking outside of the modal
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+                        // Show modal on button click
+                        startButton.onclick = function() {
+                modal.style.display = "block";
+                document.getElementById("error-message").style.display = "none"; // Hide error message on modal open
+            }
+
+            // Validate login credentials
+            function validateLogin(event) {
+                event.preventDefault(); // Prevent form submission
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
+
+                if (username === 'test' && password === 'test123') {
+                    // Proceed with login (you can add further logic here)
+                    modal.style.display = "none"; // Close modal on successful login
+                    window.location.href = "dashboard.html";
+    
+                } else {
+                    document.getElementById("error-message").style.display = "block"; // Show error message
+                }
+            }
+        </script>
     </body>
 </html>

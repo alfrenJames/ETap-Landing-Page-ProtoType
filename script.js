@@ -1,3 +1,4 @@
+// Firebase configuration
 var firebaseConfig = {
     apiKey: "AIzaSyDnnpKATQ8A4VW8hw3cYtuQgP3_bAcNIEU",
     authDomain: "prototype-control-on-ofd.firebaseapp.com",
@@ -10,87 +11,134 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-$(document).ready(function(){
-    var database = firebase.database();
-    var Led1Status;
-    var WiFiStatus; // Add a variable for wifiStatus
-    var countdown; // Variable for countdown timer
-    var countdownInterval; // Variable for countdown interval
+var Led1Status = "0"; // Initialize LED status as off
+var countdown; // Countdown timer
+var countdownInterval; // Countdown interval
 
-    database.ref().on("value", function(snap){
-        Led1Status = snap.val().Led1Status;
-        WiFiStatus = snap.val().WiFiStatus; // Get wifiStatus from Firebase
-        updateToggleDisplay();
-
-        // Start countdown if Led1Status is "1"
-        if (Led1Status == "1" && !countdown) {
-            startCountdown(120); // Start countdown for 2 minutes
-			// $(".toggle-btn").prop("disabled", true); // Disable toggle button when countdown starts
-        }
-    });
-
-	function updateToggleDisplay() {
-        if(Led1Status == "1"){    
-            document.getElementById("unact").style.display = "none";
-            document.getElementById("act").style.display = "block";
-            $(".toggle-btn").prop("disabled", true); // Disable toggle button if on
-        } else {
-            document.getElementById("unact").style.display = "block";
-            document.getElementById("act").style.display = "none";
-            $(".toggle-btn").prop("disabled", false); // Enable toggle button if off
-        }
-    }
-
-    function startCountdown(seconds) {
-        countdown = seconds;
-        countdownInterval = setInterval(function() {
-            if (countdown > 30) {
-                document.getElementById("countdown-message").innerText = "Ongoing Renting: " + countdown + " seconds left";
-            } else if (countdown <= 30 && countdown > 0) {
-                document.getElementById("countdown-message").innerText = "Please Park in Designated Station: " + countdown + " seconds left";
-            } else {
-                clearInterval(countdownInterval);
-                toggleOff();
-                document.getElementById("countdown-message").innerText = "Start Renting will appear";
+// Function to read LED status from Firebase
+function readLedStatus() {
+    var firebaseRef = firebase.database().ref().child("Led1Status");
+    firebaseRef.on("value", function(snapshot) {
+        Led1Status = snapshot.val() || "0"; // Update local status
+        document.getElementById("ledToggle").checked = (Led1Status === "1"); // Update toggle state
+        if (Led1Status === "1") {
+            document.getElementById("countdown-message").innerText = "Renting is now Starting...";
+            // Start countdown if LED is on and countdown is not already running
+            if (!countdownInterval) {
+                startCountdown(120); // Start countdown for 2 minutes
             }
-            countdown--;
-        }, 1000);
-    }
-
-    function toggleOff() {
-        var firebaseRef = firebase.database().ref().child("Led1Status");
-        firebaseRef.set("0");
-        Led1Status = "0";
-        updateToggleDisplay();
-        countdown = null; // Reset countdown
-    }
-
-    $(".toggle-btn").click(function(){
-        var firebaseRef = firebase.database().ref().child("Led1Status");
-
-        if(Led1Status == "1"){    // post to firebase
-            firebaseRef.set("0");
-            Led1Status = "0";
-            clearInterval(countdownInterval); // Clear countdown if toggled off
-            countdown = null; // Reset countdown
-            document.getElementById("countdown-message").innerText = "Start Renting will appear"; // Reset message
         } else {
-            firebaseRef.set("1");
-            Led1Status = "1";
+            document.getElementById("countdown-message").innerText = "Start Renting Unit001";
+            clearInterval(countdownInterval); // Clear countdown if LED is off
+            countdownInterval = null; // Reset countdown interval
+        }
+    });
+}
+
+function toggleLed() {
+    var firebaseRef = firebase.database().ref().child("Led1Status");
+
+    if (Led1Status === "1") { // If LED is currently on
+        firebaseRef.set("0").then(() => {
+            Led1Status = "0"; // Update local status
+            clearInterval(countdownInterval); // Clear countdown
+            document.getElementById("countdown-message").innerText = "Start Renting Unit001"; // Reset message
+            countdownInterval = null; // Reset countdown interval
+        }).catch((error) => {
+            console.error("Error updating LED status:", error);
+        });
+    } else { // If LED is currently off
+        firebaseRef.set("1").then(() => {
+            Led1Status = "1"; // Update local status
             startCountdown(120); // Start countdown for 2 minutes
-        }
-    });
+        }).catch((error) => {
+            console.error("Error updating LED status:", error);
+        });
+    }
+}
 
-    // Add click event for wifi toggle button
-    $(".wifi-toggle-btn").click(function(){
-        var wifiRef = firebase.database().ref().child("WiFiStatus");
-
-        if(WiFiStatus == "1"){    
-            wifiRef.set("0");
-            WiFiStatus = "0";
+function startCountdown(seconds) {
+    countdown = seconds;
+    document.getElementById("startButton").style.display = "block"; // Show the START button
+    document.getElementById("startButton").disabled = true; // Disable the START button
+    countdownInterval = setInterval(function() {
+        if (countdown > 0) {
+            document.getElementById("countdown-message").innerText = "Credit Time: " + countdown + " seconds left";
+            if (countdown <= 30) {
+                document.getElementById("countdown-message").innerText = "Please Park in Designated Station: " + countdown + " seconds left";
+            }
+            countdown--; // Decrement countdown
         } else {
-            wifiRef.set("1");
-            WiFiStatus = "1";
+            clearInterval(countdownInterval); // Stop the countdown
+            toggleOff(); // Turn off LED when countdown ends
+            // document.getElementById("startButton").style.display = "none"; // Hide the START button
+            document.getElementById("startButton").disabled = false; // Re-enable the START button
+        }
+    }, 1000);
+}
+
+function toggleOff() {
+    var firebaseRef = firebase.database().ref().child("Led1Status");
+    firebaseRef.set("0").then(() => {
+        Led1Status = "0"; // Update local status
+        document.getElementById("countdown-message").innerText = "Start Renting Unit001"; // Reset message
+    }).catch((error) => {
+        console.error("Error updating LED status:", error);
+    });
+}
+
+// Event listener for the toggle button
+document.getElementById("ledToggle").addEventListener("change", toggleLed);
+
+// Read the initial LED status from Firebase
+readLedStatus();
+
+function enableLedToggle() {
+   toggleLed();
+    // Deduct 1 from totalRides
+    let totalRidesElement = document.getElementById('totalRides');
+    let currentTotalRides = parseInt(totalRidesElement.innerText);
+    if (currentTotalRides > 0) {
+        totalRidesElement.innerText = currentTotalRides - 1; // Decrement total rides
+    }
+}
+
+function updateTotals() {
+    let totalAmount = 0;
+    let totalRides = 8;
+    const totalCreditBalance = 200; // Assuming this is the total credit balance
+
+    const ridesData = [
+        { amount: 100, rides: 20, toggleId: 'toggle0' },
+        { amount: 80, rides: 15, toggleId: 'toggle1' },
+        { amount: 60, rides: 10, toggleId: 'toggle2' },
+        { amount: 40, rides: 5, toggleId: 'toggle3' }
+    ];
+
+    ridesData.forEach(item => {
+        const checkbox = document.getElementById(item.toggleId);
+        if (checkbox.checked) {
+            totalAmount += item.amount;
+            totalRides += item.rides;
         }
     });
-});
+
+    document.getElementById('totalAmount').innerText = totalAmount;
+    document.getElementById('totalRides').innerText = totalRides;    
+    const buyButton = document.getElementById('buyButton');
+    buyButton.disabled = totalCreditBalance < totalAmount || totalAmount === 0;
+}
+
+function buyCredits() {
+    const totalAmount = parseInt(document.getElementById('totalAmount').innerText);
+    const totalCreditBalanceElement = document.getElementById('totalCreditBalance'); // Assuming you have an element to display the total credit balance
+    let totalCreditBalance = parseInt(totalCreditBalanceElement.innerText); // Get the current total credit balance
+
+    if (totalCreditBalance >= totalAmount) {
+        totalCreditBalance -= totalAmount; // Deduct the total amount from the credit balance
+        totalCreditBalanceElement.innerText = totalCreditBalance; // Update the displayed credit balance
+        alert('Purchase successful!'); // Optional: Notify the user
+    } else {
+        alert('Insufficient balance!'); // Optional: Notify the user
+    }
+}
